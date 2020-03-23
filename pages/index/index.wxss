@@ -1,28 +1,94 @@
-.container{
+page {
+  background: linear-gradient(0deg, rgba(0, 0, 200, 0.2), rgba(0, 0, 200, 0));
+  transition: 1s
+}
+
+.container {
+  font-family: cursive;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  background: linear-gradient(240deg, rgba(150, 50, 50, 0.3), rgba(0, 0, 200, 0));
 }
-.detail{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.bar{
-  display: flex;
-  flex-direction: row;
-  margin:20rpx 0;
-}
-.box{
-  width: 33.3%;
+
+picker {
   text-align: center;
 }
-text{
-  font-size: 80rpx;
-  color: #3C5F81;
+
+.city {
+  margin-top: 30rpx;
+  font-size: 62rpx;
+  /* color: white; */
 }
-image{
-  width: 220rpx;
+
+.location {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  color: #888;
+}
+
+.weather {
+  background-color: #dae3fd;
+  box-shadow: 9rpx 7rpx 40rpx -6px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  width: 600rpx;
+  padding: 0;
+  height: 800rpx;
+  min-height: 600rpx;
+  margin: -10rpx 40rpx 40rpx 40rpx;
+  border-radius: 10rpx;
+  position: relative;
+}
+
+.iocn {
+  width: 400rpx;
+  display: flex;
+  padding: 0;
+  flex-direction: row;
+  box-sizing: border-box;
+  margin: 20rpx 20rpx 0 20rpx;
+}
+
+.iocn  image {
+  height: 50rpx;
+}
+
+.weather .details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 40rpx 48rpx;
+  color: #888;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transition: color 2s ease;
+}
+
+.temp {
+  font-size: 150rpx;
+  line-height: 120rpx;
+  font-weight: 120;
+}
+
+.details .temp span {
+  font-size: 30rpx;
+  line-height: 40rpx;
+  vertical-align: top;
+  margin-left: -20rpx;
+}
+
+.right {
+  text-align: right;
+}
+
+.right .date {
+  font-weight: 120;
+}
+
+.right .contentText {
+  padding: 20rpx 0;
 }

@@ -1,16 +1,23 @@
 import getRq from '../../config/axios.js'
-
+import getNow from '../../utils/nowDate.js'
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     location: [],
-    now: '',
+    now: {},
     city: '',
+    imgIdx: 0,
+    // 天气类型
     weatherCode: 0,
-    // 晴 雨 风 雪
-    weatherColor: ['#e5e6fe', '#9fa4ad', '#efefef', '#e6e6e6']
+    // 晴 雨/云 风 雪
+    weatherColor: ['#e5e6fe', '#efefef', '#e6e6e6', '#d5d5d5'],
+    // 图片切换
+    imgs: ['sun-none.png', 'cloud-none.png',
+      'rain-none.png', 'snow-none.png'
+    ],
+    nowDate: null
   },
 
   //获取地理位置
@@ -48,7 +55,7 @@ Page({
     } catch (e) {
       wx.hideLoading()
       wx.showToast({
-        title: '为止错误',
+        title: '未知错误',
       })
     }
   },
@@ -69,24 +76,38 @@ Page({
 
   // 根据天气编码改变背景颜色
   changeBarColor(code) {
-    var color = ''
+    var idx = 0
+    var imgI = this.data.imgIdx
     if (code == 100)
-      color = this.data.weatherColor[0];
+      idx = 0;
     else if (200 < code < 213)
-      color = this.data.weatherColor[1];
+      idx = 1
     else if (300 < code < 400)
-      color = this.data.weatherColor[2];
+      idx = 2
     else
-      color = this.data.weatherColor[3];
+      idx = 3
+    this.setData({
+      [`imgs[${imgI}]`]: this.data.imgs[imgI].replace('use', 'none'),
+      [`imgs[${idx}]`]: this.data.imgs[idx].replace('none', 'use'),
+      imgIdx: idx
+    })
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: color,
+      backgroundColor: this.data.weatherColor[idx],
       animation: {
         duration: 400,
         timingFunc: 'easeIn'
       }
     })
     wx.hideLoading()
+  },
+
+  //获取当前时间
+  getNowDate() {
+    var now = getNow.nowDate();
+    this.setData({
+      nowDate: `${now[0]}/${now[1]}`
+    })
   },
 
   /**
@@ -96,6 +117,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
+    this.getNowDate();
     this.getLocation();
   }
 })
