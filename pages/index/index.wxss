@@ -1,6 +1,6 @@
 page {
   background: linear-gradient(0deg, rgba(0, 0, 200, 0.2), rgba(0, 0, 200, 0));
-  transition: 1s
+  transition: 1s;
 }
 
 .container {
@@ -18,7 +18,7 @@ picker {
 }
 
 .city {
-  margin-top: 30rpx;
+  margin-top: 80rpx;
   font-size: 62rpx;
   /* color: white; */
 }
@@ -30,7 +30,7 @@ picker {
 }
 
 .weather {
-  background-color: #dae3fd;
+  /* background-color: #dae3fd; */
   box-shadow: 9rpx 7rpx 40rpx -6px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   width: 600rpx;
@@ -56,12 +56,8 @@ picker {
 }
 
 .weather .details {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   padding: 40rpx 48rpx;
-  color: #888;
+  /* color: #888; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -69,16 +65,16 @@ picker {
 }
 
 .temp {
-  font-size: 150rpx;
+  font-size: 120rpx;
   line-height: 120rpx;
-  font-weight: 120;
+  font-weight: 180;
 }
 
-.details .temp span {
-  font-size: 30rpx;
+.temp span {
+  font-size: 35rpx;
   line-height: 40rpx;
   vertical-align: top;
-  margin-left: -20rpx;
+  margin-left: -25rpx;
 }
 
 .right {
@@ -86,9 +82,31 @@ picker {
 }
 
 .right .date {
-  font-weight: 120;
+  font-size: 35rpx;
+  font-weight: 150;
 }
 
 .right .contentText {
+  font-size: 35rpx;
   padding: 20rpx 0;
+}
+
+.items {
+  position: absolute;
+  bottom: 20rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.bar {
+  
+  display: flex;
+  flex-direction: row;
+  margin: 20rpx 0;
+}
+
+.box {
+  width: 33.3%;
+  text-align: center;
 }

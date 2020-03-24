@@ -1,5 +1,5 @@
 import getRq from '../../config/axios.js'
-import getNow from '../../utils/nowDate.js'
+import getNow from '../../utils/js/nowDate.js'
 Page({
   /**
    * 页面的初始数据
@@ -8,11 +8,13 @@ Page({
     location: [],
     now: {},
     city: '',
+    imageAnimation: '',
+    barAnimation: '',
     imgIdx: 0,
     // 天气类型
     weatherCode: 0,
     // 晴 雨/云 风 雪
-    weatherColor: ['#e5e6fe', '#efefef', '#e6e6e6', '#d5d5d5'],
+    weatherColor: ['#dae3fd', '#efefef', '#e6e6e6', '#d5d5d5'],
     // 图片切换
     imgs: ['sun-none.png', 'cloud-none.png',
       'rain-none.png', 'snow-none.png'
@@ -66,10 +68,12 @@ Page({
     wx.getLocation({
       type: 'wgs84',
       success: function(res) {
-        console.log(res);
         var longitude = res.longitude
         var latitude = res.latitude
         that.getWeater(longitude, latitude)
+        that.setData({
+          imageAnimation: 'animated bounce',
+        })
       }
     })
   },
@@ -77,6 +81,10 @@ Page({
   // 根据天气编码改变背景颜色
   changeBarColor(code) {
     var idx = 0
+    if (this.data.barAnimation == 'animated flipInX')
+      this.setData({
+        barAnimation: ''
+      })
     var imgI = this.data.imgIdx
     if (code == 100)
       idx = 0;
@@ -89,16 +97,33 @@ Page({
     this.setData({
       [`imgs[${imgI}]`]: this.data.imgs[imgI].replace('use', 'none'),
       [`imgs[${idx}]`]: this.data.imgs[idx].replace('none', 'use'),
-      imgIdx: idx
+      imgIdx: idx,
+      barAnimation: 'animated flipInX'
     })
-    wx.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: this.data.weatherColor[idx],
-      animation: {
-        duration: 400,
-        timingFunc: 'easeIn'
-      }
-    })
+    // 动画添加
+    this.animate('.weather', [{
+        opacity: 1.0,
+        backgroundColor: this.data.weatherColor[imgI]
+      },
+      {
+        opacity: 0.6,
+        backgroundColor: this.data.weatherColor[idx]
+      },
+    ], 2000)
+    this.animate('.contentText', [{
+      translateX: '20px',
+      opacity: 0,
+      offset: 0,
+    }, {
+      translateX: '10px',
+      opacity: 0.5,
+      offset: 0.5,
+    }, {
+      translateX: '0px',
+      opacity: 1.0,
+      offset: 1
+    }], 2000)
+
     wx.hideLoading()
   },
 
@@ -106,7 +131,7 @@ Page({
   getNowDate() {
     var now = getNow.nowDate();
     this.setData({
-      nowDate: `${now[0]}/${now[1]}`
+      nowDate: `${now[0]}/${now[1]}/${now[2]}`
     })
   },
 
@@ -119,5 +144,32 @@ Page({
     })
     this.getNowDate();
     this.getLocation();
+
+    this.animate('.date', [{
+      translateX: '20px',
+      opacity: 0,
+      offset: 0,
+    }, {
+      translateX: '10px',
+      opacity: 0.5,
+      offset: 0.5,
+    }, {
+      translateX: '0px',
+      opacity: 1.0,
+      offset: 1
+    }], 2000)
+    this.animate('.details', [{
+      translateX: '-20px',
+      opacity: 0,
+      offset: 0,
+    }, {
+      translateX: '-10px',
+      opacity: 0.5,
+      offset: 0.5,
+    }, {
+      translateX: '0px',
+      opacity: 1.0,
+      offset: 1
+    }], 2000)
   }
 })

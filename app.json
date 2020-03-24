@@ -8,6 +8,7 @@
    }
  },
   "window": {
+    "navigationStyle":"custom",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "今日天气",
