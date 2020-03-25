@@ -71,9 +71,6 @@ Page({
         var longitude = res.longitude
         var latitude = res.latitude
         that.getWeater(longitude, latitude)
-        that.setData({
-          imageAnimation: 'animated bounce',
-        })
       }
     })
   },
@@ -83,7 +80,8 @@ Page({
     var idx = 0
     if (this.data.barAnimation == 'animated flipInX')
       this.setData({
-        barAnimation: ''
+        barAnimation: '',
+        imageAnimation: ''
       })
     var imgI = this.data.imgIdx
     if (code == 100)
@@ -98,7 +96,6 @@ Page({
       [`imgs[${imgI}]`]: this.data.imgs[imgI].replace('use', 'none'),
       [`imgs[${idx}]`]: this.data.imgs[idx].replace('none', 'use'),
       imgIdx: idx,
-      barAnimation: 'animated flipInX'
     })
     // 动画添加
     this.animate('.weather', [{
@@ -125,6 +122,10 @@ Page({
     }], 2000)
 
     wx.hideLoading()
+    this.setData({
+      imageAnimation: 'animated bounce',
+      barAnimation: 'animated flipInX'
+    })
   },
 
   //获取当前时间
