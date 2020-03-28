@@ -5,12 +5,12 @@
     <view class="location">{{location[0]}}·{{location[1]}}</view>
   </picker>
   <view class="iocn">
-    <image class="{{imageAnimation}} delay-{{index}}" mode="aspectFit" src="../../images/{{imgs[index]}}" wx:for="{{imgs}}"></image>
+    <image class="{{imageAnimation}} delay-{{index}}" mode="aspectFit" src="../../images/{{imgs[index]}}" wx:for="{{imgs}}" wx:key="index"></image>
   </view>
   <view class="weather" >
     <view class="details">
       <view class="temp">{{now.tmp}}
-        <span>℃</span>
+        <span>{{now.type}}</span>
       </view>
       <view class="right">
         <view class="date">

@@ -14,7 +14,8 @@
     "navigationBarTitleText": "今日天气",
     "backgroundColor": "#e6e6ff",
     "backgroundTextStyle": "light",
-    "enablePullDownRefresh": false
+    "enablePullDownRefresh": true
+    
   },
   "sitemapLocation": "sitemap.json"
 }

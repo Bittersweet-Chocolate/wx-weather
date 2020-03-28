@@ -1,7 +1,7 @@
 import config from './config.js'
 
 
-function axios(method, url, data) {
+function axios(method = 'get', url, data = '') {
   var baseUrl = config.baseUrl
   /*
   params请求需要的参数
@@ -12,8 +12,8 @@ function axios(method, url, data) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: baseUrl + url,
-      method: method || 'get',
-      data: data || '',
+      method: method,
+      data: data,
       success(res) {
         if (res.statusCode === 200) {
           resolve(res.data)

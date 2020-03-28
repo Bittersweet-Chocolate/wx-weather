@@ -29,7 +29,7 @@ Page({
       city: e.detail.value[2]
     })
     wx.showLoading({
-      title: '加载中',
+      title: '加载中...',
     })
     this.getWeater(); //更新天气
   },
@@ -46,10 +46,12 @@ Page({
     }
     try {
       getRq.axios('get', '/now?', data).then(val => {
-        var result = val.HeWeather6[0]
+        let result = val.HeWeather6[0]
+        result.now.type ='℃'
         that.setData({
           now: result.now,
-          location: [result.basic.admin_area, result.basic.parent_city, result.basic.location]
+          location: [result.basic.admin_area, result.basic.parent_city, result.basic.location],
+          city: result.basic.location
         })
         // 根据天气改变颜色
         that.changeBarColor(result.now.cond_code)
@@ -58,6 +60,7 @@ Page({
       wx.hideLoading()
       wx.showToast({
         title: '未知错误',
+        icon: 'none'
       })
     }
   },
@@ -68,9 +71,14 @@ Page({
     wx.getLocation({
       type: 'wgs84',
       success: function(res) {
-        var longitude = res.longitude
-        var latitude = res.latitude
-        that.getWeater(longitude, latitude)
+        that.getWeater(res.longitude, res.latitude)
+      },
+      fail: function(res) {
+        wx.hideLoading()
+        wx.showToast({
+          title: '未能成功获取地址',
+          icon: 'none'
+        })
       }
     })
   },
@@ -120,12 +128,11 @@ Page({
       opacity: 1.0,
       offset: 1
     }], 2000)
-
-    wx.hideLoading()
     this.setData({
       imageAnimation: 'animated bounce',
       barAnimation: 'animated flipInX'
     })
+    wx.hideLoading()
   },
 
   //获取当前时间
@@ -135,17 +142,20 @@ Page({
       nowDate: `${now[0]}/${now[1]}/${now[2]}`
     })
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
+  // 下拉刷新
+  onPullDownRefresh() {
     wx.showLoading({
-      title: '加载中',
+      title: '刷新中...',
     })
     this.getNowDate();
-    this.getLocation();
+    this.getWeater();
+    // this.getLocation();
+    // this.drawAnimate()
+    wx.stopPullDownRefresh()
+  },
 
+  // 动画
+  drawAnimate(){
     this.animate('.date', [{
       translateX: '20px',
       opacity: 0,
@@ -172,5 +182,15 @@ Page({
       opacity: 1.0,
       offset: 1
     }], 2000)
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    this.getNowDate();
+    this.getLocation();
   }
 })
